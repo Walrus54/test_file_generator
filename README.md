@@ -41,15 +41,20 @@ src/
 
 ## Модификаторы, которых нет в C++
 
-Добавлены модификаторы классов и методов из C# и Java (узлы эмитят только те
-флаги, что осмысленны для их языка; чужие игнорируются):
+Набор модификаторов взят из источников, указанных в ТЗ, а не «по памяти»:
 
-| Категория | C#                                                                    | Java                                                |
-| --------- | --------------------------------------------------------------------- | --------------------------------------------------- |
-| Доступ    | `internal`, `protected internal`, `private protected`                 | package-private (без ключевого слова)               |
-| Класс     | `abstract`, `sealed`, `static`, `partial`                             | `abstract`, `final`, `static`, `strictfp`           |
-| Метод     | `abstract`, `virtual`, `override`, `sealed`, `async`, `new`, `static` | `abstract`, `final`, `native`, `static`, `strictfp` |
-| Поле      | `static`, `readonly`                                                  | `static`, `final`                                   |
+- C# — [metanit.com/sharp/tutorial/3.2.php](https://metanit.com/sharp/tutorial/3.2.php) (модификаторы доступа);
+- Java — [proglang.su/java/modifiers](http://proglang.su/java/modifiers) (до п. 3.4; `synchronized`, `transient`, `volatile` не включаются).
+
+Перечисления (`src/types.h`) повторяют выверенный по сайтам набор: один и тот же
+флаг рендерится по-разному в зависимости от языка, лишние флаги язык игнорирует.
+
+| Категория | C#                                                                    | Java                                  |
+| --------- | --------------------------------------------------------------------- | ------------------------------------- |
+| Доступ    | `internal`, `protected internal`, `private protected`, `file` (C# 11) | package-private (без ключевого слова) |
+| Класс     | `abstract`, `sealed` (из `CM_FINAL`)                                  | `abstract`, `final`                   |
+| Метод     | `static`, `virtual`, `abstract`                                       | `static`, `final`, `abstract`         |
+| Поле      | `static`, `readonly` (из `MM_FINAL`)                                  | `static`, `final`                     |
 
 ## Сборка и запуск
 

@@ -19,7 +19,8 @@ std::string generateProgram( const AbstractFactory& factory ) {
 }
 
 std::string generateCSharpShowcase( const AbstractFactory& factory ) {
-    auto showcase = factory.createClass( "CSharpShowcase", CM_ABSTRACT | CM_PARTIAL );
+    // abstract-класс с abstract/virtual/static методами и C#-модификаторами доступа.
+    auto showcase = factory.createClass( "CSharpShowcase", CM_ABSTRACT );
 
     showcase->add( factory.createMethod( "Process", "void", MM_ABSTRACT ), PUBLIC );
 
@@ -28,14 +29,16 @@ std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     showcase->add( render, PUBLIC );
 
     showcase->add( factory.createMethod( "Helper", "void", MM_STATIC ), PRIVATE );
-    showcase->add( factory.createMethod( "Tick", "void", MM_ASYNC ), INTERNAL );
-    showcase->add( factory.createMethod( "Reset", "void", 0 ), PROTECTED_INTERNAL );
+    showcase->add( factory.createMethod( "Internal", "void", 0 ), INTERNAL );
+    showcase->add( factory.createMethod( "Mixed", "void", 0 ), PROTECTED_INTERNAL );
+    showcase->add( factory.createMethod( "Restricted", "void", 0 ), PRIVATE_PROTECTED );
 
     return showcase->compile();
 }
 
 std::string generateJavaShowcase( const AbstractFactory& factory ) {
-    auto showcase = factory.createClass( "JavaShowcase", CM_ABSTRACT | CM_STRICTFP );
+    // abstract-класс с abstract/final/static методами и package-private доступом.
+    auto showcase = factory.createClass( "JavaShowcase", CM_ABSTRACT );
 
     showcase->add( factory.createMethod( "process", "void", MM_ABSTRACT ), PUBLIC );
 
@@ -44,8 +47,7 @@ std::string generateJavaShowcase( const AbstractFactory& factory ) {
     showcase->add( render, PUBLIC );
 
     showcase->add( factory.createMethod( "helper", "void", MM_STATIC ), PUBLIC );
-    showcase->add( factory.createMethod( "lowLevel", "void", MM_NATIVE ), PROTECTED );
-    showcase->add( factory.createMethod( "packageLocal", "void", 0 ), PACKAGE_PRIVATE );
+    showcase->add( factory.createMethod( "packageLocal", "void", 0 ), ACCESS_UNKNOWN );
 
     return showcase->compile();
 }
