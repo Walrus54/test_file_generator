@@ -2,7 +2,10 @@
 /// @brief Реализация фабрики узлов для языка C++.
 #include "cpp/cpp_factory.h"
 
-#include "cpp/cpp_units.h"
+#include "cpp/cpp_class_unit.h"
+#include "cpp/cpp_field_unit.h"
+#include "cpp/cpp_method_unit.h"
+#include "cpp/cpp_print_operator_unit.h"
 
 namespace codegen::cpp {
 
