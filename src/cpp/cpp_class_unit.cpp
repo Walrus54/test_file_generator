@@ -16,6 +16,13 @@ const char* sectionKeyword( AccessModifier access ) {
     }
 }
 
+/// @brief Свернуть любой модификатор доступа к одной из трёх секций C++.
+/// Значения, которых в C++ нет (internal и т. п.), попадают в private,
+/// иначе член молча потерялся бы при генерации.
+AccessModifier cppSection( AccessModifier access ) {
+    return ( access == PUBLIC || access == PROTECTED ) ? access : PRIVATE;
+}
+
 } // namespace
 
 std::string CppClassUnit::compile( unsigned int level ) const {
@@ -30,7 +37,7 @@ std::string CppClassUnit::compile( unsigned int level ) const {
     for( AccessModifier access : order ) {
         bool opened = false;
         for( const auto& member : m_members ) {
-            if( member->accessModifier() != access ) {
+            if( cppSection( member->accessModifier() ) != access ) {
                 continue;
             }
             if( !opened ) {
