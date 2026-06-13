@@ -36,7 +36,9 @@ src/
   unit.h / unit.cpp          базовый Unit
   class_unit.{h,cpp} ...     абстрактные ClassUnit / MethodUnit / FieldUnit / PrintOperatorUnit
   factory.h                  AbstractFactory
-  cpp/  csharp/  java/        конкретные фабрики и узлы по языкам (.h + .cpp)
+  cpp/  csharp/  java/        по языкам: каждый юнит в своей паре .h+.cpp
+                             (*_class_unit, *_method_unit, *_field_unit,
+                              *_print_operator_unit) + *_factory + *_access.h
 ```
 
 ## Модификаторы, которых нет в C++

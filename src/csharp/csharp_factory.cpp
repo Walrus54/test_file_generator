@@ -2,7 +2,10 @@
 /// @brief Реализация фабрики узлов для языка C#.
 #include "csharp/csharp_factory.h"
 
-#include "csharp/csharp_units.h"
+#include "csharp/csharp_class_unit.h"
+#include "csharp/csharp_field_unit.h"
+#include "csharp/csharp_method_unit.h"
+#include "csharp/csharp_print_operator_unit.h"
 
 namespace codegen::csharp {
 
