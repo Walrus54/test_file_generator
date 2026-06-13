@@ -40,16 +40,18 @@ int main( int argc, char** argv ) {
     csharp::CSharpFactory csharpFactory;
     java::JavaFactory javaFactory;
 
+    const ClassSpec program = programSpec();
+
     // C++: для компиляции единицы трансляции printf требуется объявление.
-    writeFile( root / "cpp" / "MyClass.cpp", "#include <cstdio>\n\n" + generateProgram( cppFactory ) );
+    writeFile( root / "cpp" / "MyClass.cpp", "#include <cstdio>\n\n" + buildClass( cppFactory, program ) );
 
     // C#: библиотека классов, по одному типу на файл.
-    writeFile( root / "csharp" / "MyClass.cs", generateProgram( csharpFactory ) );
-    writeFile( root / "csharp" / "CSharpShowcase.cs", generateCSharpShowcase( csharpFactory ) );
+    writeFile( root / "csharp" / "MyClass.cs", buildClass( csharpFactory, program ) );
+    writeFile( root / "csharp" / "CSharpShowcase.cs", buildClass( csharpFactory, csharpShowcaseSpec() ) );
 
     // Java: один класс на файл, имя файла совпадает с именем класса.
-    writeFile( root / "java" / "MyClass.java", generateProgram( javaFactory ) );
-    writeFile( root / "java" / "JavaShowcase.java", generateJavaShowcase( javaFactory ) );
+    writeFile( root / "java" / "MyClass.java", buildClass( javaFactory, program ) );
+    writeFile( root / "java" / "JavaShowcase.java", buildClass( javaFactory, javaShowcaseSpec() ) );
 
     std::cout << "emitted generated sources into " << root << "\n";
     return 0;
