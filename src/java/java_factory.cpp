@@ -2,7 +2,10 @@
 /// @brief Реализация фабрики узлов для языка Java.
 #include "java/java_factory.h"
 
-#include "java/java_units.h"
+#include "java/java_class_unit.h"
+#include "java/java_field_unit.h"
+#include "java/java_method_unit.h"
+#include "java/java_print_operator_unit.h"
 
 namespace codegen::java {
 
