@@ -40,4 +40,22 @@ inline std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     return showcase->compile();
 }
 
+// Showcase that exercises the Java-specific class and method modifiers added on
+// top of C++. The result compiles with javac.
+inline std::string generateJavaShowcase( const AbstractFactory& factory ) {
+    auto showcase = factory.createClass( "JavaShowcase", CM_ABSTRACT | CM_STRICTFP );
+
+    showcase->add( factory.createMethod( "process", "void", MM_ABSTRACT ), PUBLIC );
+
+    auto render = factory.createMethod( "render", "void", MM_FINAL );
+    render->add( factory.createPrintOperator( "render" ) );
+    showcase->add( render, PUBLIC );
+
+    showcase->add( factory.createMethod( "helper", "void", MM_STATIC ), PUBLIC );
+    showcase->add( factory.createMethod( "lowLevel", "void", MM_NATIVE ), PROTECTED );
+    showcase->add( factory.createMethod( "packageLocal", "void", 0 ), PACKAGE_PRIVATE );
+
+    return showcase->compile();
+}
+
 } // namespace codegen
