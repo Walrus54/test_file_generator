@@ -26,7 +26,7 @@ ClassSpec programSpec() {
             { "testFunc1", "void", 0, PUBLIC, {} },
             { "testFunc2", "void", MM_STATIC, PRIVATE, {} },
             { "testFunc3", "void", MM_VIRTUAL | MM_CONST, PUBLIC, {} },
-            { "testFunc4", "void", MM_STATIC, PROTECTED, { R"(Hello, world!\n)" } },
+            { "testFunc4", "void", MM_STATIC, PROTECTED, { "Hello, world!\n" } },
         },
     };
 }
