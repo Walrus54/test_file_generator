@@ -17,9 +17,11 @@ AbstractFactory ──► createClass / createMethod / createField / createPrint
       └── JavaFactory     → JavaClassUnit,   JavaMethodUnit,   ...
 ```
 
-Клиент (`generateProgram` в `examples.cpp`) работает только с
-`AbstractFactory`, поэтому один и тот же код собирает программу на любом из
-трёх языков — достаточно передать другую конкретную фабрику.
+Сборщик `buildClass(factory, spec)` (`examples.cpp`) принимает фабрику и
+спецификацию `ClassSpec` — имя, флаги класса и список методов с их флагами и
+модификаторами доступа. Флаги задаются вызывающей стороной (как данные), а не
+зашиты в сборщик; одна и та же `ClassSpec` собирается на любом из трёх языков —
+достаточно передать другую конкретную фабрику.
 
 ## Структура
 

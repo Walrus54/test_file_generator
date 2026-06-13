@@ -24,14 +24,17 @@ int main() {
     csharp::CSharpFactory csharpFactory;
     java::JavaFactory javaFactory;
 
-    // Один и тот же вызов generateProgram() порождает все три языка.
-    printSection( cppFactory.languageName() + " : MyClass", generateProgram( cppFactory ) );
-    printSection( csharpFactory.languageName() + "  : MyClass", generateProgram( csharpFactory ) );
-    printSection( javaFactory.languageName() + " : MyClass", generateProgram( javaFactory ) );
+    // Одна и та же спецификация (с флагами) собирается на всех трёх языках.
+    const ClassSpec program = programSpec();
+    printSection( cppFactory.languageName() + " : MyClass", buildClass( cppFactory, program ) );
+    printSection( csharpFactory.languageName() + "  : MyClass", buildClass( csharpFactory, program ) );
+    printSection( javaFactory.languageName() + " : MyClass", buildClass( javaFactory, program ) );
 
     // Демонстрации модификаторов, специфичных для каждого языка.
-    printSection( csharpFactory.languageName() + "  : modifier showcase", generateCSharpShowcase( csharpFactory ) );
-    printSection( javaFactory.languageName() + " : modifier showcase", generateJavaShowcase( javaFactory ) );
+    printSection( csharpFactory.languageName() + "  : modifier showcase",
+                  buildClass( csharpFactory, csharpShowcaseSpec() ) );
+    printSection( javaFactory.languageName() + " : modifier showcase",
+                  buildClass( javaFactory, javaShowcaseSpec() ) );
 
     return 0;
 }
