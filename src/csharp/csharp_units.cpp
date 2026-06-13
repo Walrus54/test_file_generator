@@ -5,7 +5,7 @@
 namespace codegen::csharp {
 namespace {
 
-/// @brief Ключевое слово доступа C#. Package-private отображается в private.
+/// @brief Ключевое слово доступа C#. Источник набора — metanit 3.2.
 std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
         case PUBLIC:             return "public";
@@ -13,8 +13,8 @@ std::string accessKeyword( AccessModifier access ) {
         case INTERNAL:           return "internal";
         case PROTECTED_INTERNAL: return "protected internal";
         case PRIVATE_PROTECTED:  return "private protected";
+        case FILE_ACCESS:        return "file";
         case PRIVATE:
-        case PACKAGE_PRIVATE:
         default:                 return "private";
     }
 }
@@ -24,9 +24,7 @@ std::string accessKeyword( AccessModifier access ) {
 std::string CSharpClassUnit::compile( unsigned int level ) const {
     std::string mods;
     if( m_flags & CM_ABSTRACT ) mods += "abstract ";
-    if( m_flags & CM_SEALED )   mods += "sealed ";
-    if( m_flags & CM_STATIC )   mods += "static ";
-    if( m_flags & CM_PARTIAL )  mods += "partial ";
+    if( m_flags & CM_FINAL )    mods += "sealed "; // final-класс в C# — sealed.
 
     std::string shift = generateShift( level );
     std::string result = shift + mods + "class " + m_name + "\n";
@@ -41,13 +39,11 @@ std::string CSharpClassUnit::compile( unsigned int level ) const {
 std::string CSharpMethodUnit::compile( unsigned int level ) const {
     std::string result = generateShift( level ) + accessKeyword( m_access ) + " ";
 
-    if( m_flags & MM_NEW )      result += "new ";
     if( m_flags & MM_STATIC )   result += "static ";
     if( m_flags & MM_VIRTUAL )  result += "virtual ";
     if( m_flags & MM_ABSTRACT ) result += "abstract ";
-    if( m_flags & MM_SEALED )   result += "sealed ";
-    if( m_flags & MM_OVERRIDE ) result += "override ";
-    if( m_flags & MM_ASYNC )    result += "async ";
+    // const — модификатор C++; final-метод в C# выражается через sealed override,
+    // что требует базового класса, поэтому на уровне метода не выводится.
 
     result += m_returnType + " " + m_name + "()";
 
@@ -66,8 +62,8 @@ std::string CSharpMethodUnit::compile( unsigned int level ) const {
 
 std::string CSharpFieldUnit::compile( unsigned int level ) const {
     std::string result = generateShift( level ) + accessKeyword( m_access ) + " ";
-    if( m_flags & FM_STATIC )   result += "static ";
-    if( m_flags & FM_READONLY ) result += "readonly ";
+    if( m_flags & MM_STATIC ) result += "static ";
+    if( m_flags & MM_FINAL )  result += "readonly "; // final-поле в C# — readonly.
     result += m_type + " " + m_name + ";\n";
     return result;
 }
