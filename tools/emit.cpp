@@ -1,5 +1,11 @@
-// Writes every generated program to disk so that tests/verify.sh can feed the
-// output to the real C++, C# and Java compilers. Usage: emit <output-dir>
+/**
+ * @file emit.cpp
+ * @brief Запись сгенерированных программ на диск для проверки компиляции.
+ *
+ * Помещает вывод генератора в файлы, чтобы tests/verify.sh мог передать их
+ * настоящим компиляторам C++, C# и Java. Использование: emit <каталог-вывода>
+ */
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -15,6 +21,11 @@ namespace fs = std::filesystem;
 
 namespace {
 
+/**
+ * @brief Записать строку в файл, создав при необходимости родительские каталоги.
+ * @param path    Путь к файлу.
+ * @param content Содержимое файла.
+ */
 void writeFile( const fs::path& path, const std::string& content ) {
     fs::create_directories( path.parent_path() );
     std::ofstream out( path );
@@ -23,6 +34,12 @@ void writeFile( const fs::path& path, const std::string& content ) {
 
 } // namespace
 
+/**
+ * @brief Точка входа утилиты.
+ * @param argc Число аргументов.
+ * @param argv Аргументы; argv[1] — каталог для записи результатов.
+ * @return Код возврата процесса.
+ */
 int main( int argc, char** argv ) {
     if( argc < 2 ) {
         std::cerr << "usage: emit <output-dir>\n";
@@ -34,15 +51,15 @@ int main( int argc, char** argv ) {
     csharp::CSharpFactory csharpFactory;
     java::JavaFactory javaFactory;
 
-    // C++: printf needs a declaration for the translation unit to compile.
+    // C++: для компиляции единицы трансляции printf требуется объявление.
     writeFile( root / "cpp" / "MyClass.cpp",
                "#include <cstdio>\n\n" + generateProgram( cppFactory ) );
 
-    // C#: a class library, one type per file.
+    // C#: библиотека классов, по одному типу на файл.
     writeFile( root / "csharp" / "MyClass.cs", generateProgram( csharpFactory ) );
     writeFile( root / "csharp" / "CSharpShowcase.cs", generateCSharpShowcase( csharpFactory ) );
 
-    // Java: one class per file, file name matches the class name.
+    // Java: один класс на файл, имя файла совпадает с именем класса.
     writeFile( root / "java" / "MyClass.java", generateProgram( javaFactory ) );
     writeFile( root / "java" / "JavaShowcase.java", generateJavaShowcase( javaFactory ) );
 
