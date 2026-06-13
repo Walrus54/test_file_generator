@@ -1,13 +1,27 @@
 #pragma once
 
+/**
+ * @file examples.hpp
+ * @brief Переиспользуемые сборщики демонстрационных программ.
+ *
+ * Все сборщики зависят только от AbstractFactory, поэтому один и тот же код даёт
+ * программу на C++, C# или Java в зависимости от переданной фабрики.
+ */
+
 #include <string>
 
 #include "codegen/factory.hpp"
 
 namespace codegen {
 
-// Portable demo: the exact program from the lab, built only through the
-// AbstractFactory so the identical code yields C++, C# or Java.
+/**
+ * @brief Переносимая демо-программа из лабораторной работы.
+ *
+ * Строит класс MyClass только через AbstractFactory, поэтому идентичный вызов
+ * порождает C++, C# или Java.
+ * @param factory Конкретная фабрика целевого языка.
+ * @return Сгенерированный текст программы.
+ */
 inline std::string generateProgram( const AbstractFactory& factory ) {
     auto myClass = factory.createClass( "MyClass" );
 
@@ -22,8 +36,13 @@ inline std::string generateProgram( const AbstractFactory& factory ) {
     return myClass->compile();
 }
 
-// Showcase that exercises the C#-specific class and method modifiers added on
-// top of C++. The result compiles as a C# library.
+/**
+ * @brief Демонстрация модификаторов класса и метода, специфичных для C#.
+ *
+ * Результат компилируется как библиотека C#.
+ * @param factory Фабрика C#.
+ * @return Сгенерированный текст класса-демонстрации.
+ */
 inline std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     auto showcase = factory.createClass( "CSharpShowcase", CM_ABSTRACT | CM_PARTIAL );
 
@@ -40,8 +59,13 @@ inline std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     return showcase->compile();
 }
 
-// Showcase that exercises the Java-specific class and method modifiers added on
-// top of C++. The result compiles with javac.
+/**
+ * @brief Демонстрация модификаторов класса и метода, специфичных для Java.
+ *
+ * Результат компилируется компилятором javac.
+ * @param factory Фабрика Java.
+ * @return Сгенерированный текст класса-демонстрации.
+ */
 inline std::string generateJavaShowcase( const AbstractFactory& factory ) {
     auto showcase = factory.createClass( "JavaShowcase", CM_ABSTRACT | CM_STRICTFP );
 

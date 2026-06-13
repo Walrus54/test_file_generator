@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file csharp_units.hpp
+ * @brief Конкретные узлы генерации для языка C#.
+ */
+
 #include <string>
 
 #include "codegen/class_unit.hpp"
@@ -9,8 +14,13 @@
 
 namespace codegen::csharp {
 
-// Maps the shared AccessModifier enum onto C# keywords. C# has no
-// package-private, so it falls back to "private".
+/**
+ * @brief Сопоставить общий AccessModifier ключевому слову C#.
+ *
+ * В C# нет package-private, поэтому такое значение отображается в "private".
+ * @param access Модификатор доступа.
+ * @return Ключевое слово доступа C#.
+ */
 inline std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
         case PUBLIC:             return "public";
@@ -24,14 +34,22 @@ inline std::string accessKeyword( AccessModifier access ) {
     }
 }
 
+/**
+ * @brief Узел класса C#. Выводит модификаторы abstract/sealed/static/partial.
+ */
 class CSharpClassUnit : public ClassUnit {
 public:
     using ClassUnit::ClassUnit;
 
+    /**
+     * @brief Сгенерировать объявление класса C#.
+     * @param level Уровень вложенности.
+     * @return Текст класса.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string mods;
-        // A top-level class is left at the default (internal) access; only the
-        // C#-specific class modifiers are emitted here.
+        // У класса верхнего уровня доступ оставляем по умолчанию (internal);
+        // здесь выводятся только специфичные для C# модификаторы класса.
         if( m_flags & CM_ABSTRACT ) mods += "abstract ";
         if( m_flags & CM_SEALED )   mods += "sealed ";
         if( m_flags & CM_STATIC )   mods += "static ";
@@ -48,10 +66,21 @@ public:
     }
 };
 
+/**
+ * @brief Узел метода C#.
+ *
+ * Выводит модификаторы new/static/virtual/abstract/sealed/override/async.
+ * Абстрактный метод формируется без тела (только сигнатура с «;»).
+ */
 class CSharpMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
 
+    /**
+     * @brief Сгенерировать определение метода C#.
+     * @param level Уровень вложенности.
+     * @return Текст метода.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level ) + accessKeyword( m_access ) + " ";
 
@@ -62,7 +91,7 @@ public:
         if( m_flags & MM_SEALED )   result += "sealed ";
         if( m_flags & MM_OVERRIDE ) result += "override ";
         if( m_flags & MM_ASYNC )    result += "async ";
-        // MM_CONST has no method-level meaning in C# and is ignored.
+        // MM_CONST не имеет смысла на уровне метода в C# и игнорируется.
 
         result += m_returnType + " " + m_name + "()";
 
@@ -80,25 +109,41 @@ public:
     }
 };
 
+/**
+ * @brief Узел поля C#. Выводит модификаторы static/readonly.
+ */
 class CSharpFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
 
+    /**
+     * @brief Сгенерировать объявление поля C#.
+     * @param level Уровень вложенности.
+     * @return Текст поля.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level ) + accessKeyword( m_access ) + " ";
         if( m_flags & FM_STATIC )   result += "static ";
         if( m_flags & FM_READONLY ) result += "readonly ";
-        // FM_CONST in C# requires a compile-time initializer, so it is not
-        // emitted for value-less fields; static/readonly cover the demos.
+        // FM_CONST в C# требует инициализатора времени компиляции, поэтому для
+        // поля без значения не выводится; static/readonly покрывают примеры.
         result += m_type + " " + m_name + ";\n";
         return result;
     }
 };
 
+/**
+ * @brief Узел оператора печати C# (через System.Console.WriteLine).
+ */
 class CSharpPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
 
+    /**
+     * @brief Сгенерировать вызов System.Console.WriteLine.
+     * @param level Уровень вложенности.
+     * @return Текст оператора печати.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         return generateShift( level ) + "System.Console.WriteLine( \"" + m_text + "\" );\n";
     }
