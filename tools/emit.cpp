@@ -1,31 +1,23 @@
-/**
- * @file emit.cpp
- * @brief Запись сгенерированных программ на диск для проверки компиляции.
- *
- * Помещает вывод генератора в файлы, чтобы tests/verify.sh мог передать их
- * настоящим компиляторам C++, C# и Java. Использование: emit <каталог-вывода>
- */
-
+/// @file emit.cpp
+/// @brief Запись сгенерированных программ на диск для проверки компиляции.
+///
+/// Использование: emit <каталог-вывода>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 
-#include "codegen/cpp/cpp_factory.hpp"
-#include "codegen/csharp/csharp_factory.hpp"
-#include "codegen/java/java_factory.hpp"
-#include "examples.hpp"
+#include "cpp/cpp_factory.h"
+#include "csharp/csharp_factory.h"
+#include "examples.h"
+#include "java/java_factory.h"
 
 using namespace codegen;
 namespace fs = std::filesystem;
 
 namespace {
 
-/**
- * @brief Записать строку в файл, создав при необходимости родительские каталоги.
- * @param path    Путь к файлу.
- * @param content Содержимое файла.
- */
+/// @brief Записать строку в файл, создав родительские каталоги.
 void writeFile( const fs::path& path, const std::string& content ) {
     fs::create_directories( path.parent_path() );
     std::ofstream out( path );
@@ -34,12 +26,9 @@ void writeFile( const fs::path& path, const std::string& content ) {
 
 } // namespace
 
-/**
- * @brief Точка входа утилиты.
- * @param argc Число аргументов.
- * @param argv Аргументы; argv[1] — каталог для записи результатов.
- * @return Код возврата процесса.
- */
+/// @brief Точка входа утилиты.
+/// @param argc Число аргументов.
+/// @param argv argv[1] — каталог для записи результатов.
 int main( int argc, char** argv ) {
     if( argc < 2 ) {
         std::cerr << "usage: emit <output-dir>\n";
@@ -52,8 +41,7 @@ int main( int argc, char** argv ) {
     java::JavaFactory javaFactory;
 
     // C++: для компиляции единицы трансляции printf требуется объявление.
-    writeFile( root / "cpp" / "MyClass.cpp",
-               "#include <cstdio>\n\n" + generateProgram( cppFactory ) );
+    writeFile( root / "cpp" / "MyClass.cpp", "#include <cstdio>\n\n" + generateProgram( cppFactory ) );
 
     // C#: библиотека классов, по одному типу на файл.
     writeFile( root / "csharp" / "MyClass.cs", generateProgram( csharpFactory ) );

@@ -1,28 +1,10 @@
-#pragma once
-
-/**
- * @file examples.hpp
- * @brief Переиспользуемые сборщики демонстрационных программ.
- *
- * Все сборщики зависят только от AbstractFactory, поэтому один и тот же код даёт
- * программу на C++, C# или Java в зависимости от переданной фабрики.
- */
-
-#include <string>
-
-#include "codegen/factory.hpp"
+/// @file examples.cpp
+/// @brief Реализация сборщиков демонстрационных программ.
+#include "examples.h"
 
 namespace codegen {
 
-/**
- * @brief Переносимая демо-программа из лабораторной работы.
- *
- * Строит класс MyClass только через AbstractFactory, поэтому идентичный вызов
- * порождает C++, C# или Java.
- * @param factory Конкретная фабрика целевого языка.
- * @return Сгенерированный текст программы.
- */
-inline std::string generateProgram( const AbstractFactory& factory ) {
+std::string generateProgram( const AbstractFactory& factory ) {
     auto myClass = factory.createClass( "MyClass" );
 
     myClass->add( factory.createMethod( "testFunc1", "void", 0 ), PUBLIC );
@@ -36,14 +18,7 @@ inline std::string generateProgram( const AbstractFactory& factory ) {
     return myClass->compile();
 }
 
-/**
- * @brief Демонстрация модификаторов класса и метода, специфичных для C#.
- *
- * Результат компилируется как библиотека C#.
- * @param factory Фабрика C#.
- * @return Сгенерированный текст класса-демонстрации.
- */
-inline std::string generateCSharpShowcase( const AbstractFactory& factory ) {
+std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     auto showcase = factory.createClass( "CSharpShowcase", CM_ABSTRACT | CM_PARTIAL );
 
     showcase->add( factory.createMethod( "Process", "void", MM_ABSTRACT ), PUBLIC );
@@ -59,14 +34,7 @@ inline std::string generateCSharpShowcase( const AbstractFactory& factory ) {
     return showcase->compile();
 }
 
-/**
- * @brief Демонстрация модификаторов класса и метода, специфичных для Java.
- *
- * Результат компилируется компилятором javac.
- * @param factory Фабрика Java.
- * @return Сгенерированный текст класса-демонстрации.
- */
-inline std::string generateJavaShowcase( const AbstractFactory& factory ) {
+std::string generateJavaShowcase( const AbstractFactory& factory ) {
     auto showcase = factory.createClass( "JavaShowcase", CM_ABSTRACT | CM_STRICTFP );
 
     showcase->add( factory.createMethod( "process", "void", MM_ABSTRACT ), PUBLIC );

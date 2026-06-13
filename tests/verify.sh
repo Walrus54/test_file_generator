@@ -5,7 +5,6 @@ set -u
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK="${ROOT}/.codegen-tmp"
-INCLUDE="${ROOT}/include"
 
 rm -rf "${WORK}"
 mkdir -p "${WORK}"
@@ -15,7 +14,8 @@ pass() { printf '  \033[32mPASS\033[0m %s\n' "$1"; }
 bad()  { printf '  \033[31mFAIL\033[0m %s\n' "$1"; fail=1; }
 
 echo "==> Building the generator and emitting sample sources"
-g++ -std=c++17 -I "${INCLUDE}" -I "${ROOT}" -o "${WORK}/emit" "${ROOT}/tools/emit.cpp" || exit 1
+g++ -std=c++17 -I "${ROOT}/src" -I "${ROOT}" -o "${WORK}/emit" \
+    "${ROOT}/tools/emit.cpp" "${ROOT}/examples.cpp" "${ROOT}"/src/*.cpp "${ROOT}"/src/*/*.cpp || exit 1
 "${WORK}/emit" "${WORK}/out" || exit 1
 
 echo "==> C++ (g++ -std=c++17)"
