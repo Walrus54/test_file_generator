@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file cpp_units.hpp
+ * @brief Конкретные узлы генерации для языка C++.
+ */
+
 #include <array>
 #include <string>
 
@@ -10,13 +15,24 @@
 
 namespace codegen::cpp {
 
+/**
+ * @brief Узел класса C++.
+ *
+ * Группирует члены под метками public:/protected:/private:, как в исходном
+ * генераторе.
+ */
 class CppClassUnit : public ClassUnit {
 public:
     using ClassUnit::ClassUnit;
 
+    /**
+     * @brief Сгенерировать объявление класса C++.
+     * @param level Уровень вложенности.
+     * @return Текст класса.
+     */
     std::string compile( unsigned int level = 0 ) const override {
-        // C++ has no abstract/sealed/partial/... class modifiers, so m_flags
-        // is intentionally ignored here.
+        // В C++ нет модификаторов класса abstract/sealed/partial/..., поэтому
+        // m_flags здесь намеренно игнорируется.
         std::string result = generateShift( level ) + "class " + m_name + " {\n";
 
         static constexpr std::array< AccessModifier, 3 > order = { PUBLIC, PROTECTED, PRIVATE };
@@ -44,10 +60,18 @@ public:
     }
 };
 
+/**
+ * @brief Узел метода C++. Выводит модификаторы static/virtual/const.
+ */
 class CppMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
 
+    /**
+     * @brief Сгенерировать определение метода C++.
+     * @param level Уровень вложенности.
+     * @return Текст метода.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level );
         if( m_flags & MM_STATIC ) {
@@ -68,10 +92,18 @@ public:
     }
 };
 
+/**
+ * @brief Узел поля C++. Выводит модификаторы static/const.
+ */
 class CppFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
 
+    /**
+     * @brief Сгенерировать объявление поля C++.
+     * @param level Уровень вложенности.
+     * @return Текст поля.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level );
         if( m_flags & FM_STATIC ) {
@@ -85,10 +117,18 @@ public:
     }
 };
 
+/**
+ * @brief Узел оператора печати C++ (через printf).
+ */
 class CppPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
 
+    /**
+     * @brief Сгенерировать вызов printf.
+     * @param level Уровень вложенности.
+     * @return Текст оператора печати.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         return generateShift( level ) + "printf( \"" + m_text + "\" );\n";
     }

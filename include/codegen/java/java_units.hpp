@@ -1,5 +1,10 @@
 #pragma once
 
+/**
+ * @file java_units.hpp
+ * @brief Конкретные узлы генерации для языка Java.
+ */
+
 #include <string>
 
 #include "codegen/class_unit.hpp"
@@ -9,21 +14,35 @@
 
 namespace codegen::java {
 
-// Maps the shared AccessModifier enum onto Java keywords. The package-private
-// default (and any C#-only value) renders as no keyword at all.
+/**
+ * @brief Сопоставить общий AccessModifier ключевому слову Java.
+ *
+ * Доступ по умолчанию (package-private) и любые значения, специфичные для C#,
+ * отображаются в пустую строку (без ключевого слова).
+ * @param access Модификатор доступа.
+ * @return Ключевое слово доступа Java либо пустая строка.
+ */
 inline std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
         case PUBLIC:    return "public";
         case PROTECTED: return "protected";
         case PRIVATE:   return "private";
-        default:        return ""; // package-private / C#-only values
+        default:        return ""; // package-private / значения только для C#
     }
 }
 
+/**
+ * @brief Узел класса Java. Выводит модификаторы abstract/final/static/strictfp.
+ */
 class JavaClassUnit : public ClassUnit {
 public:
     using ClassUnit::ClassUnit;
 
+    /**
+     * @brief Сгенерировать объявление класса Java.
+     * @param level Уровень вложенности.
+     * @return Текст класса.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string mods;
         if( m_flags & CM_ABSTRACT ) mods += "abstract ";
@@ -41,10 +60,21 @@ public:
     }
 };
 
+/**
+ * @brief Узел метода Java.
+ *
+ * Выводит модификаторы static/final/abstract/native/strictfp.
+ * Абстрактные и native-методы формируются без тела (только сигнатура с «;»).
+ */
 class JavaMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
 
+    /**
+     * @brief Сгенерировать определение метода Java.
+     * @param level Уровень вложенности.
+     * @return Текст метода.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level );
         std::string access = accessKeyword( m_access );
@@ -55,11 +85,11 @@ public:
         if( m_flags & MM_ABSTRACT ) result += "abstract ";
         if( m_flags & MM_NATIVE )   result += "native ";
         if( m_flags & MM_STRICTFP ) result += "strictfp ";
-        // MM_CONST / MM_VIRTUAL / C#-only flags have no Java meaning.
+        // MM_CONST / MM_VIRTUAL и флаги, специфичные для C#, в Java смысла не имеют.
 
         result += m_returnType + " " + m_name + "()";
 
-        // Abstract and native methods have no body in Java.
+        // У абстрактных и native-методов в Java нет тела.
         if( m_flags & ( MM_ABSTRACT | MM_NATIVE ) ) {
             result += ";\n";
             return result;
@@ -74,10 +104,18 @@ public:
     }
 };
 
+/**
+ * @brief Узел поля Java. Выводит модификаторы static/final.
+ */
 class JavaFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
 
+    /**
+     * @brief Сгенерировать объявление поля Java.
+     * @param level Уровень вложенности.
+     * @return Текст поля.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         std::string result = generateShift( level );
         std::string access = accessKeyword( m_access );
@@ -89,10 +127,18 @@ public:
     }
 };
 
+/**
+ * @brief Узел оператора печати Java (через System.out.println).
+ */
 class JavaPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
 
+    /**
+     * @brief Сгенерировать вызов System.out.println.
+     * @param level Уровень вложенности.
+     * @return Текст оператора печати.
+     */
     std::string compile( unsigned int level = 0 ) const override {
         return generateShift( level ) + "System.out.println( \"" + m_text + "\" );\n";
     }
