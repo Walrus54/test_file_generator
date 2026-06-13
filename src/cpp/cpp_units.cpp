@@ -5,15 +5,28 @@
 #include <array>
 
 namespace codegen::cpp {
+namespace {
+
+/// @brief Ключевое слово секции доступа C++.
+const char* sectionKeyword( AccessModifier access ) {
+    switch( access ) {
+        case PUBLIC:    return "public";
+        case PROTECTED: return "protected";
+        default:        return "private";
+    }
+}
+
+} // namespace
 
 std::string CppClassUnit::compile( unsigned int level ) const {
-    // В C++ нет модификаторов класса abstract/sealed/partial — m_flags игнорируется.
     std::string shift = generateShift( level );
-    std::string result = shift + "class " + m_name + " {\n";
+    std::string result = shift + "class " + m_name;
+    if( m_flags & CM_FINAL ) {
+        result += " final";
+    }
+    result += " {\n";
 
     static constexpr std::array< AccessModifier, 3 > order = { PUBLIC, PROTECTED, PRIVATE };
-    static const char* keyword[] = { "public", "protected", "private" };
-
     for( AccessModifier access : order ) {
         bool opened = false;
         for( const auto& member : m_members ) {
@@ -21,7 +34,7 @@ std::string CppClassUnit::compile( unsigned int level ) const {
                 continue;
             }
             if( !opened ) {
-                result += shift + keyword[ access ] + ":\n";
+                result += shift + sectionKeyword( access ) + ":\n";
                 opened = true;
             }
             result += member->compile( level + 1 );
@@ -39,12 +52,20 @@ std::string CppMethodUnit::compile( unsigned int level ) const {
     std::string result = generateShift( level );
     if( m_flags & MM_STATIC ) {
         result += "static ";
-    } else if( m_flags & MM_VIRTUAL ) {
+    } else if( m_flags & ( MM_VIRTUAL | MM_ABSTRACT ) ) {
         result += "virtual ";
     }
     result += m_returnType + " " + m_name + "()";
     if( m_flags & MM_CONST ) {
         result += " const";
+    }
+    if( m_flags & MM_FINAL ) {
+        result += " final";
+    }
+    // Чистая виртуальная функция — без тела.
+    if( m_flags & MM_ABSTRACT ) {
+        result += " = 0;\n";
+        return result;
     }
     result += " {\n";
     for( const auto& statement : m_body ) {
@@ -56,10 +77,10 @@ std::string CppMethodUnit::compile( unsigned int level ) const {
 
 std::string CppFieldUnit::compile( unsigned int level ) const {
     std::string result = generateShift( level );
-    if( m_flags & FM_STATIC ) {
+    if( m_flags & MM_STATIC ) {
         result += "static ";
     }
-    if( m_flags & FM_CONST ) {
+    if( m_flags & MM_CONST ) {
         result += "const ";
     }
     result += m_type + " " + m_name + ";\n";

@@ -6,6 +6,7 @@ namespace codegen::java {
 namespace {
 
 /// @brief Ключевое слово доступа Java. Package-private — пустая строка.
+/// Источник набора модификаторов — proglang.su/java/modifiers.
 std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
         case PUBLIC:    return "public";
@@ -21,8 +22,6 @@ std::string JavaClassUnit::compile( unsigned int level ) const {
     std::string mods;
     if( m_flags & CM_ABSTRACT ) mods += "abstract ";
     if( m_flags & CM_FINAL )    mods += "final ";
-    if( m_flags & CM_STATIC )   mods += "static ";
-    if( m_flags & CM_STRICTFP ) mods += "strictfp ";
 
     std::string shift = generateShift( level );
     std::string result = shift + mods + "class " + m_name + " {\n";
@@ -41,13 +40,12 @@ std::string JavaMethodUnit::compile( unsigned int level ) const {
     if( m_flags & MM_STATIC )   result += "static ";
     if( m_flags & MM_FINAL )    result += "final ";
     if( m_flags & MM_ABSTRACT ) result += "abstract ";
-    if( m_flags & MM_NATIVE )   result += "native ";
-    if( m_flags & MM_STRICTFP ) result += "strictfp ";
+    // const / virtual — не модификаторы Java, игнорируются.
 
     result += m_returnType + " " + m_name + "()";
 
-    // У абстрактных и native-методов в Java нет тела.
-    if( m_flags & ( MM_ABSTRACT | MM_NATIVE ) ) {
+    // У абстрактного метода в Java нет тела.
+    if( m_flags & MM_ABSTRACT ) {
         result += ";\n";
         return result;
     }
@@ -64,8 +62,8 @@ std::string JavaFieldUnit::compile( unsigned int level ) const {
     std::string result = generateShift( level );
     std::string access = accessKeyword( m_access );
     if( !access.empty() ) result += access + " ";
-    if( m_flags & FM_STATIC ) result += "static ";
-    if( m_flags & FM_FINAL )  result += "final ";
+    if( m_flags & MM_STATIC ) result += "static ";
+    if( m_flags & MM_FINAL )  result += "final ";
     result += m_type + " " + m_name + ";\n";
     return result;
 }
