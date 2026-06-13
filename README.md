@@ -17,23 +17,26 @@ AbstractFactory ──► createClass / createMethod / createField / createPrint
       └── JavaFactory     → JavaClassUnit,   JavaMethodUnit,   ...
 ```
 
-Клиент (`generateProgram` в `examples.hpp`) работает только с
+Клиент (`generateProgram` в `examples.cpp`) работает только с
 `AbstractFactory`, поэтому один и тот же код собирает программу на любом из
 трёх языков — достаточно передать другую конкретную фабрику.
 
 ## Структура
 
+Объявления вынесены в заголовки `.h`, реализация — в `.cpp` (отдельная
+статическая библиотека `codegen`):
+
 ```
 main.cpp                     демонстрация: одна программа на 3 языках + showcase модификаторов
-examples.hpp                 переиспользуемые сборщики демо-программ
+examples.h / examples.cpp    переиспользуемые сборщики демо-программ
 tools/emit.cpp               пишет сгенерированный код в файлы для проверки компиляции
 tests/verify.sh              компилирует весь сгенерированный код реальными тулчейнами
-include/codegen/
-  types.hpp                  Flags + перечисления модификаторов (Access/Method/Class/Field)
-  unit.hpp                   базовый Unit
-  class_unit.hpp ...         абстрактные ClassUnit / MethodUnit / FieldUnit / PrintOperatorUnit
-  factory.hpp                AbstractFactory
-  cpp/    csharp/    java/   конкретные фабрики и узлы по языкам
+src/
+  types.h                    Flags + перечисления модификаторов (Access/Method/Class/Field)
+  unit.h / unit.cpp          базовый Unit
+  class_unit.{h,cpp} ...     абстрактные ClassUnit / MethodUnit / FieldUnit / PrintOperatorUnit
+  factory.h                  AbstractFactory
+  cpp/  csharp/  java/        конкретные фабрики и узлы по языкам (.h + .cpp)
 ```
 
 ## Модификаторы, которых нет в C++
@@ -56,7 +59,7 @@ cmake -S . -B build && cmake --build build
 ./build/code_generator        # печатает сгенерированный код на 3 языках
 
 # или напрямую
-g++ -std=c++17 -Iinclude -o code_generator main.cpp && ./code_generator
+g++ -std=c++17 -Isrc -I. -o code_generator main.cpp examples.cpp src/*.cpp src/*/*.cpp && ./code_generator
 ```
 
 ## Проверка, что сгенерированный код компилируется
