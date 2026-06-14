@@ -1,5 +1,3 @@
-/// @file cpp_field_unit.cpp
-/// @brief Реализация узла поля C++.
 #include "cpp/cpp_field_unit.h"
 
 namespace codegen::cpp {

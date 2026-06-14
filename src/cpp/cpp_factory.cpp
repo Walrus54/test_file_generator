@@ -1,5 +1,3 @@
-/// @file cpp_factory.cpp
-/// @brief Реализация фабрики узлов для языка C++.
 #include "cpp/cpp_factory.h"
 
 #include "cpp/cpp_class_unit.h"

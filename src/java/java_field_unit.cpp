@@ -1,5 +1,3 @@
-/// @file java_field_unit.cpp
-/// @brief Реализация узла поля Java.
 #include "java/java_field_unit.h"
 
 #include "java/java_access.h"

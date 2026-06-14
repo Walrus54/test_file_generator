@@ -1,5 +1,3 @@
-/// @file field_unit.cpp
-/// @brief Реализация абстрактного узла поля.
 #include "field_unit.h"
 
 #include "text_util.h"

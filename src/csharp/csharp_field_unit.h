@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file csharp_field_unit.h
-/// @brief Узел поля для языка C#.
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_FIELD_UNIT_H
+#define CODEGEN_SRC_CSHARP_CSHARP_FIELD_UNIT_H
 
 #include "field_unit.h"
 
 namespace codegen::csharp {
 
-/// @brief Узел поля C# (static; readonly из MM_FINAL).
+// Узел поля C#: static; readonly из MM_FINAL.
 class CSharpFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_FIELD_UNIT_H

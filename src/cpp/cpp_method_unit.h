@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file cpp_method_unit.h
-/// @brief Узел метода для языка C++.
+#ifndef CODEGEN_SRC_CPP_CPP_METHOD_UNIT_H
+#define CODEGEN_SRC_CPP_CPP_METHOD_UNIT_H
 
 #include "method_unit.h"
 
 namespace codegen::cpp {
 
-/// @brief Узел метода C++ (static/virtual/const/final, чистая виртуальность).
+// Узел метода C++ (static/virtual/const/final, чистая виртуальность).
 class CppMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::cpp
+
+#endif // CODEGEN_SRC_CPP_CPP_METHOD_UNIT_H

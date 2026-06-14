@@ -1,5 +1,3 @@
-/// @file csharp_field_unit.cpp
-/// @brief Реализация узла поля C#.
 #include "csharp/csharp_field_unit.h"
 
 #include "csharp/csharp_access.h"

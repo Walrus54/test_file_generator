@@ -1,5 +1,3 @@
-/// @file examples.cpp
-/// @brief Реализация обобщённого сборщика и демо-спецификаций.
 #include "examples.h"
 
 namespace codegen {
@@ -23,10 +21,10 @@ ClassSpec programSpec() {
         "MyClass",
         CM_UNKNOWN,
         {
-            { "testFunc1", "void", 0, PUBLIC, {} },
-            { "testFunc2", "void", MM_STATIC, PRIVATE, {} },
-            { "testFunc3", "void", MM_VIRTUAL | MM_CONST, PUBLIC, {} },
-            { "testFunc4", "void", MM_STATIC, PROTECTED, { "Hello, world!\n" } },
+            { "testFunc1", "void", 0, AM_PUBLIC, {} },
+            { "testFunc2", "void", MM_STATIC, AM_PRIVATE, {} },
+            { "testFunc3", "void", MM_VIRTUAL | MM_CONST, AM_PUBLIC, {} },
+            { "testFunc4", "void", MM_STATIC, AM_PROTECTED, { "Hello, world!\n" } },
         },
     };
 }
@@ -37,12 +35,12 @@ ClassSpec csharpShowcaseSpec() {
         "CSharpShowcase",
         CM_ABSTRACT,
         {
-            { "Process", "void", MM_ABSTRACT, PUBLIC, {} },
-            { "Render", "void", MM_VIRTUAL, PUBLIC, { "render" } },
-            { "Helper", "void", MM_STATIC, PRIVATE, {} },
-            { "Internal", "void", 0, INTERNAL, {} },
-            { "Mixed", "void", 0, PROTECTED_INTERNAL, {} },
-            { "Restricted", "void", 0, PRIVATE_PROTECTED, {} },
+            { "Process", "void", MM_ABSTRACT, AM_PUBLIC, {} },
+            { "Render", "void", MM_VIRTUAL, AM_PUBLIC, { "render" } },
+            { "Helper", "void", MM_STATIC, AM_PRIVATE, {} },
+            { "Internal", "void", 0, AM_INTERNAL, {} },
+            { "Mixed", "void", 0, AM_PROTECTED_INTERNAL, {} },
+            { "Restricted", "void", 0, AM_PRIVATE_PROTECTED, {} },
         },
     };
 }
@@ -53,10 +51,10 @@ ClassSpec javaShowcaseSpec() {
         "JavaShowcase",
         CM_ABSTRACT,
         {
-            { "process", "void", MM_ABSTRACT, PUBLIC, {} },
-            { "render", "void", MM_FINAL, PUBLIC, { "render" } },
-            { "helper", "void", MM_STATIC, PUBLIC, {} },
-            { "packageLocal", "void", 0, ACCESS_UNKNOWN, {} },
+            { "process", "void", MM_ABSTRACT, AM_PUBLIC, {} },
+            { "render", "void", MM_FINAL, AM_PUBLIC, { "render" } },
+            { "helper", "void", MM_STATIC, AM_PUBLIC, {} },
+            { "packageLocal", "void", 0, AM_UNKNOWN, {} },
         },
     };
 }

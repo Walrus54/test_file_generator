@@ -1,7 +1,5 @@
-#pragma once
-
-/// @file method_unit.h
-/// @brief Абстрактный узел «метод».
+#ifndef CODEGEN_SRC_METHOD_UNIT_H
+#define CODEGEN_SRC_METHOD_UNIT_H
 
 #include <string>
 #include <vector>
@@ -10,27 +8,21 @@
 
 namespace codegen {
 
-/// @brief Абстрактный узел метода.
-///
-/// Хранит сигнатуру и операторы тела. Конкретные языки реализуют compile() и
-/// решают, какие флаги модификаторов выводить.
+// Хранит сигнатуру и операторы тела. Конкретные языки реализуют compile() и
+// решают, какие флаги модификаторов выводить.
 class MethodUnit : public Unit {
 public:
-    /// @brief Конструктор.
-    /// @param name       Имя метода.
-    /// @param returnType Тип возвращаемого значения.
-    /// @param flags      Модификаторы метода (см. MethodModifier).
     MethodUnit( const std::string& name, const std::string& returnType, Flags flags );
 
-    /// @brief Добавить оператор в тело метода.
-    /// @param unit Узел-оператор.
     void add( const std::shared_ptr< Unit >& unit, Flags flags = 0 ) override;
 
 protected:
-    std::string m_name;                            ///< Имя метода.
-    std::string m_returnType;                      ///< Тип возвращаемого значения.
-    Flags m_flags;                                 ///< Модификаторы метода.
-    std::vector< std::shared_ptr< Unit > > m_body; ///< Операторы тела.
+    std::string m_name;
+    std::string m_returnType;
+    Flags m_flags;
+    std::vector< std::shared_ptr< Unit > > m_body;
 };
 
 } // namespace codegen
+
+#endif // CODEGEN_SRC_METHOD_UNIT_H

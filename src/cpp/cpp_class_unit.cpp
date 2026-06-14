@@ -1,5 +1,3 @@
-/// @file cpp_class_unit.cpp
-/// @brief Реализация узла класса C++.
 #include "cpp/cpp_class_unit.h"
 
 #include <array>
@@ -7,20 +5,18 @@
 namespace codegen::cpp {
 namespace {
 
-/// @brief Ключевое слово секции доступа C++.
 const char* sectionKeyword( AccessModifier access ) {
     switch( access ) {
-        case PUBLIC:    return "public";
-        case PROTECTED: return "protected";
+        case AM_PUBLIC:    return "public";
+        case AM_PROTECTED: return "protected";
         default:        return "private";
     }
 }
 
-/// @brief Свернуть любой модификатор доступа к одной из трёх секций C++.
-/// Значения, которых в C++ нет (internal и т. п.), попадают в private,
-/// иначе член молча потерялся бы при генерации.
+// Значения, которых в C++ нет (internal и т. п.), попадают в private,
+// иначе член молча потерялся бы при генерации.
 AccessModifier cppSection( AccessModifier access ) {
-    return ( access == PUBLIC || access == PROTECTED ) ? access : PRIVATE;
+    return ( access == AM_PUBLIC || access == AM_PROTECTED ) ? access : AM_PRIVATE;
 }
 
 } // namespace
@@ -33,7 +29,7 @@ std::string CppClassUnit::compile( unsigned int level ) const {
     }
     result += " {\n";
 
-    static constexpr std::array< AccessModifier, 3 > order = { PUBLIC, PROTECTED, PRIVATE };
+    static constexpr std::array< AccessModifier, 3 > order = { AM_PUBLIC, AM_PROTECTED, AM_PRIVATE };
     for( AccessModifier access : order ) {
         bool opened = false;
         for( const auto& member : m_members ) {

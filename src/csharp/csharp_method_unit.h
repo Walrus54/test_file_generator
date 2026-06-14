@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file csharp_method_unit.h
-/// @brief Узел метода для языка C#.
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_METHOD_UNIT_H
+#define CODEGEN_SRC_CSHARP_CSHARP_METHOD_UNIT_H
 
 #include "method_unit.h"
 
 namespace codegen::csharp {
 
-/// @brief Узел метода C# (static/virtual/abstract).
+// Узел метода C#: static/virtual/abstract.
 class CSharpMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_METHOD_UNIT_H

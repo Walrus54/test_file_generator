@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file java_class_unit.h
-/// @brief Узел класса для языка Java.
+#ifndef CODEGEN_SRC_JAVA_JAVA_CLASS_UNIT_H
+#define CODEGEN_SRC_JAVA_JAVA_CLASS_UNIT_H
 
 #include "class_unit.h"
 
 namespace codegen::java {
 
-/// @brief Узел класса Java (abstract/final).
 class JavaClassUnit : public ClassUnit {
 public:
     using ClassUnit::ClassUnit;
@@ -15,3 +12,5 @@ public:
 };
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_CLASS_UNIT_H

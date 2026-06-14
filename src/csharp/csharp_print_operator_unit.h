@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file csharp_print_operator_unit.h
-/// @brief Узел оператора печати для языка C#.
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_PRINT_OPERATOR_UNIT_H
+#define CODEGEN_SRC_CSHARP_CSHARP_PRINT_OPERATOR_UNIT_H
 
 #include "print_operator_unit.h"
 
 namespace codegen::csharp {
 
-/// @brief Узел оператора печати C# (через System.Console.WriteLine).
+// Узел оператора печати C#: через System.Console.WriteLine.
 class CSharpPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_PRINT_OPERATOR_UNIT_H

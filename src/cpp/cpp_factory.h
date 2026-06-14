@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file cpp_factory.h
-/// @brief Фабрика узлов для языка C++.
+#ifndef CODEGEN_SRC_CPP_CPP_FACTORY_H
+#define CODEGEN_SRC_CPP_CPP_FACTORY_H
 
 #include "factory.h"
 
 namespace codegen::cpp {
 
-/// @brief Конкретная фабрика, порождающая семейство узлов C++.
+// Конкретная фабрика, порождающая семейство узлов C++.
 class CppFactory : public AbstractFactory {
 public:
     std::shared_ptr< ClassUnit > createClass(
@@ -22,3 +20,5 @@ public:
 };
 
 } // namespace codegen::cpp
+
+#endif // CODEGEN_SRC_CPP_CPP_FACTORY_H

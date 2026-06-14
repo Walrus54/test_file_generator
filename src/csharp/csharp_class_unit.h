@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file csharp_class_unit.h
-/// @brief Узел класса для языка C#.
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_CLASS_UNIT_H
+#define CODEGEN_SRC_CSHARP_CSHARP_CLASS_UNIT_H
 
 #include "class_unit.h"
 
 namespace codegen::csharp {
 
-/// @brief Узел класса C# (abstract; sealed из CM_FINAL).
+// Узел класса C#: abstract; sealed из CM_FINAL.
 class CSharpClassUnit : public ClassUnit {
 public:
     using ClassUnit::ClassUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_CLASS_UNIT_H

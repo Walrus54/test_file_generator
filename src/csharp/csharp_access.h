@@ -1,8 +1,7 @@
-#pragma once
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_ACCESS_H
+#define CODEGEN_SRC_CSHARP_CSHARP_ACCESS_H
 
-/// @file csharp_access.h
-/// @brief Сопоставление модификатора доступа ключевому слову C#.
-/// Источник набора — metanit.com/sharp/tutorial/3.2.php.
+// Источник набора модификаторов — metanit.com/sharp/tutorial/3.2.php.
 
 #include <string>
 
@@ -10,18 +9,20 @@
 
 namespace codegen::csharp {
 
-/// @brief Ключевое слово доступа C#. Package-private отображается в private.
+// Package-private отображается в private.
 inline std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
-        case PUBLIC:             return "public";
-        case PROTECTED:          return "protected";
-        case INTERNAL:           return "internal";
-        case PROTECTED_INTERNAL: return "protected internal";
-        case PRIVATE_PROTECTED:  return "private protected";
-        case FILE_ACCESS:        return "file";
-        case PRIVATE:
+        case AM_PUBLIC:             return "public";
+        case AM_PROTECTED:          return "protected";
+        case AM_INTERNAL:           return "internal";
+        case AM_PROTECTED_INTERNAL: return "protected internal";
+        case AM_PRIVATE_PROTECTED:  return "private protected";
+        case AM_FILE:        return "file";
+        case AM_PRIVATE:
         default:                 return "private";
     }
 }
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_ACCESS_H

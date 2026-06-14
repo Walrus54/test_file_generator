@@ -1,5 +1,3 @@
-/// @file cpp_print_operator_unit.cpp
-/// @brief Реализация узла оператора печати C++.
 #include "cpp/cpp_print_operator_unit.h"
 
 #include "text_util.h"

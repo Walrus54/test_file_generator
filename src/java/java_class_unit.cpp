@@ -1,5 +1,3 @@
-/// @file java_class_unit.cpp
-/// @brief Реализация узла класса Java.
 #include "java/java_class_unit.h"
 
 namespace codegen::java {

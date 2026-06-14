@@ -1,5 +1,3 @@
-/// @file csharp_class_unit.cpp
-/// @brief Реализация узла класса C#.
 #include "csharp/csharp_class_unit.h"
 
 namespace codegen::csharp {

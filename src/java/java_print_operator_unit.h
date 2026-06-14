@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file java_print_operator_unit.h
-/// @brief Узел оператора печати для языка Java.
+#ifndef CODEGEN_SRC_JAVA_JAVA_PRINT_OPERATOR_UNIT_H
+#define CODEGEN_SRC_JAVA_JAVA_PRINT_OPERATOR_UNIT_H
 
 #include "print_operator_unit.h"
 
 namespace codegen::java {
 
-/// @brief Узел оператора печати Java (через System.out.println).
 class JavaPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
@@ -15,3 +12,5 @@ public:
 };
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_PRINT_OPERATOR_UNIT_H

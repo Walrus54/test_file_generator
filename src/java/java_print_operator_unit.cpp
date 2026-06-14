@@ -1,5 +1,3 @@
-/// @file java_print_operator_unit.cpp
-/// @brief Реализация узла оператора печати Java.
 #include "java/java_print_operator_unit.h"
 
 #include "text_util.h"

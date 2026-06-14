@@ -1,7 +1,5 @@
-/// @file emit.cpp
-/// @brief Запись сгенерированных программ на диск для проверки компиляции.
-///
-/// Использование: emit <каталог-вывода>
+// Запись сгенерированных программ на диск для проверки компиляции.
+// Использование: emit <каталог-вывода>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -17,7 +15,6 @@ namespace fs = std::filesystem;
 
 namespace {
 
-/// @brief Записать строку в файл, создав родительские каталоги.
 void writeFile( const fs::path& path, const std::string& content ) {
     fs::create_directories( path.parent_path() );
     std::ofstream out( path );
@@ -26,9 +23,6 @@ void writeFile( const fs::path& path, const std::string& content ) {
 
 } // namespace
 
-/// @brief Точка входа утилиты.
-/// @param argc Число аргументов.
-/// @param argv argv[1] — каталог для записи результатов.
 int main( int argc, char** argv ) {
     if( argc < 2 ) {
         std::cerr << "usage: emit <output-dir>\n";

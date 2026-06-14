@@ -1,5 +1,3 @@
-/// @file class_unit.cpp
-/// @brief Реализация абстрактного узла класса.
 #include "class_unit.h"
 
 #include "text_util.h"

@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file cpp_field_unit.h
-/// @brief Узел поля для языка C++.
+#ifndef CODEGEN_SRC_CPP_CPP_FIELD_UNIT_H
+#define CODEGEN_SRC_CPP_CPP_FIELD_UNIT_H
 
 #include "field_unit.h"
 
 namespace codegen::cpp {
 
-/// @brief Узел поля C++ (static/const).
+// Узел поля C++ (static/const).
 class CppFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::cpp
+
+#endif // CODEGEN_SRC_CPP_CPP_FIELD_UNIT_H

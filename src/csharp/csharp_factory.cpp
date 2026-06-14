@@ -1,5 +1,3 @@
-/// @file csharp_factory.cpp
-/// @brief Реализация фабрики узлов для языка C#.
 #include "csharp/csharp_factory.h"
 
 #include "csharp/csharp_class_unit.h"

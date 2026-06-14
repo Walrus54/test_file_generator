@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file java_factory.h
-/// @brief Фабрика узлов для языка Java.
+#ifndef CODEGEN_SRC_JAVA_JAVA_FACTORY_H
+#define CODEGEN_SRC_JAVA_JAVA_FACTORY_H
 
 #include "factory.h"
 
 namespace codegen::java {
 
-/// @brief Конкретная фабрика, порождающая семейство узлов Java.
 class JavaFactory : public AbstractFactory {
 public:
     std::shared_ptr< ClassUnit > createClass(
@@ -22,3 +19,5 @@ public:
 };
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_FACTORY_H

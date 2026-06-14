@@ -1,5 +1,3 @@
-/// @file method_unit.cpp
-/// @brief Реализация абстрактного узла метода.
 #include "method_unit.h"
 
 #include "text_util.h"

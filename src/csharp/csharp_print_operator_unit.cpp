@@ -1,5 +1,3 @@
-/// @file csharp_print_operator_unit.cpp
-/// @brief Реализация узла оператора печати C#.
 #include "csharp/csharp_print_operator_unit.h"
 
 #include "text_util.h"

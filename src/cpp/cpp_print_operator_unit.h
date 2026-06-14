@@ -1,13 +1,11 @@
-#pragma once
-
-/// @file cpp_print_operator_unit.h
-/// @brief Узел оператора печати для языка C++.
+#ifndef CODEGEN_SRC_CPP_CPP_PRINT_OPERATOR_UNIT_H
+#define CODEGEN_SRC_CPP_CPP_PRINT_OPERATOR_UNIT_H
 
 #include "print_operator_unit.h"
 
 namespace codegen::cpp {
 
-/// @brief Узел оператора печати C++ (через printf).
+// Узел оператора печати C++ (через printf).
 class CppPrintOperatorUnit : public PrintOperatorUnit {
 public:
     using PrintOperatorUnit::PrintOperatorUnit;
@@ -15,3 +13,5 @@ public:
 };
 
 } // namespace codegen::cpp
+
+#endif // CODEGEN_SRC_CPP_CPP_PRINT_OPERATOR_UNIT_H

@@ -1,8 +1,8 @@
-#pragma once
+#ifndef CODEGEN_SRC_JAVA_JAVA_ACCESS_H
+#define CODEGEN_SRC_JAVA_JAVA_ACCESS_H
 
-/// @file java_access.h
-/// @brief Сопоставление модификатора доступа ключевому слову Java.
-/// Источник набора — proglang.su/java/modifiers.
+// Сопоставление модификатора доступа ключевому слову Java.
+// Источник набора — proglang.su/java/modifiers.
 
 #include <string>
 
@@ -10,14 +10,16 @@
 
 namespace codegen::java {
 
-/// @brief Ключевое слово доступа Java. Package-private — пустая строка.
+// Package-private — пустая строка.
 inline std::string accessKeyword( AccessModifier access ) {
     switch( access ) {
-        case PUBLIC:    return "public";
-        case PROTECTED: return "protected";
-        case PRIVATE:   return "private";
+        case AM_PUBLIC:    return "public";
+        case AM_PROTECTED: return "protected";
+        case AM_PRIVATE:   return "private";
         default:        return ""; // package-private / значения только для C#
     }
 }
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_ACCESS_H

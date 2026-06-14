@@ -1,5 +1,3 @@
-/// @file java_method_unit.cpp
-/// @brief Реализация узла метода Java.
 #include "java/java_method_unit.h"
 
 #include "java/java_access.h"

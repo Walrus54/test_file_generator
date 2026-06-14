@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file java_field_unit.h
-/// @brief Узел поля для языка Java.
+#ifndef CODEGEN_SRC_JAVA_JAVA_FIELD_UNIT_H
+#define CODEGEN_SRC_JAVA_JAVA_FIELD_UNIT_H
 
 #include "field_unit.h"
 
 namespace codegen::java {
 
-/// @brief Узел поля Java (static/final).
 class JavaFieldUnit : public FieldUnit {
 public:
     using FieldUnit::FieldUnit;
@@ -15,3 +12,5 @@ public:
 };
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_FIELD_UNIT_H

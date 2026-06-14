@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file csharp_factory.h
-/// @brief Фабрика узлов для языка C#.
+#ifndef CODEGEN_SRC_CSHARP_CSHARP_FACTORY_H
+#define CODEGEN_SRC_CSHARP_CSHARP_FACTORY_H
 
 #include "factory.h"
 
 namespace codegen::csharp {
 
-/// @brief Конкретная фабрика, порождающая семейство узлов C#.
 class CSharpFactory : public AbstractFactory {
 public:
     std::shared_ptr< ClassUnit > createClass(
@@ -22,3 +19,5 @@ public:
 };
 
 } // namespace codegen::csharp
+
+#endif // CODEGEN_SRC_CSHARP_CSHARP_FACTORY_H

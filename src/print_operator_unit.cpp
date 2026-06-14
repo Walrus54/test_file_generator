@@ -1,5 +1,3 @@
-/// @file print_operator_unit.cpp
-/// @brief Реализация абстрактного узла оператора печати.
 #include "print_operator_unit.h"
 
 namespace codegen {

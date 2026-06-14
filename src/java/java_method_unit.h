@@ -1,13 +1,10 @@
-#pragma once
-
-/// @file java_method_unit.h
-/// @brief Узел метода для языка Java.
+#ifndef CODEGEN_SRC_JAVA_JAVA_METHOD_UNIT_H
+#define CODEGEN_SRC_JAVA_JAVA_METHOD_UNIT_H
 
 #include "method_unit.h"
 
 namespace codegen::java {
 
-/// @brief Узел метода Java (static/final/abstract).
 class JavaMethodUnit : public MethodUnit {
 public:
     using MethodUnit::MethodUnit;
@@ -15,3 +12,5 @@ public:
 };
 
 } // namespace codegen::java
+
+#endif // CODEGEN_SRC_JAVA_JAVA_METHOD_UNIT_H

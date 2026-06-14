@@ -1,5 +1,3 @@
-/// @file cpp_method_unit.cpp
-/// @brief Реализация узла метода C++.
 #include "cpp/cpp_method_unit.h"
 
 namespace codegen::cpp {

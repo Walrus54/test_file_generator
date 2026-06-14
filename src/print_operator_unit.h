@@ -1,7 +1,5 @@
-#pragma once
-
-/// @file print_operator_unit.h
-/// @brief Абстрактный узел «оператор печати».
+#ifndef CODEGEN_SRC_PRINT_OPERATOR_UNIT_H
+#define CODEGEN_SRC_PRINT_OPERATOR_UNIT_H
 
 #include <string>
 
@@ -9,15 +7,15 @@
 
 namespace codegen {
 
-/// @brief Абстрактный узел оператора печати. Конкретные языки реализуют compile().
+// Конкретные языки реализуют compile().
 class PrintOperatorUnit : public Unit {
 public:
-    /// @brief Конструктор.
-    /// @param text Текст для вывода.
     explicit PrintOperatorUnit( const std::string& text );
 
 protected:
-    std::string m_text; ///< Выводимый текст.
+    std::string m_text;
 };
 
 } // namespace codegen
+
+#endif // CODEGEN_SRC_PRINT_OPERATOR_UNIT_H
