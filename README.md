@@ -74,7 +74,8 @@ g++ -std=c++17 -Isrc -I. -o code_generator main.cpp examples.cpp src/*.cpp src/*
 ## Проверка, что сгенерированный код компилируется
 
 ```bash
-bash tests/verify.sh
+bash tests/verify.sh          # Linux/macOS
+pwsh tests/verify.ps1         # Windows (PowerShell)
 ```
 
 Скрипт генерирует программы, затем компилирует их:
